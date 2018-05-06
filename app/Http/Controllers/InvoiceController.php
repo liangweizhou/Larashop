@@ -18,11 +18,10 @@ class InvoiceController extends Controller
 
 
     public function index(){
-        //获取当前登录用户的发票列表
         $invoices = $this->model
             ->where('user_id',Auth::id())
             ->get();
-        return response()->json($invoices);
+        return view('invoice.index')->with(['invoice' => $invoices]);
     }
 
     public function show($id){
@@ -30,7 +29,7 @@ class InvoiceController extends Controller
         $invoice = $this->model
                          ->where([['id',$id],['user_id',Auth::id()]])
                          ->first();
-        return response()->json($invoice);
+        return view('invoice.detail')->with(['invoice' =>$invoice]);
     }
 
     public function create(){
@@ -43,7 +42,7 @@ class InvoiceController extends Controller
         $data = $request->only(['org_name','tax_id','org_addr','org_tel','org_bank','org_account']);
         $data['user_id'] = Auth::id();
         $this->model->create($data);
-        return back();
+        return redirect(route('invoice.show'));
     }
 
     //显示修改发票信息表单
@@ -58,14 +57,16 @@ class InvoiceController extends Controller
     }
 
     //更新发票信息
-    public function update(StoreInvoicePost $request, $id){
+    public function update(StoreInvoicePost $request, $id)
+    {
         $data  = $request->only(['org_name','tax_id','org_addr','org_tel','org_bank','org_account']);
         $data['user_id'] = Auth::id();
         $this->model
             ->where([
                 ['id', $id],
                 ['user_id', Auth::id()]
-            ])->update();
+            ])->update($data);
+        return redirect(route('invoice.index'));
     }
 
     //删除发票信息

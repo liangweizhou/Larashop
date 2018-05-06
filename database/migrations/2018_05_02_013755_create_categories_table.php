@@ -54,6 +54,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->unsigned()->nullable()->comment('父类ID');
+            $table->json('parent_ids')->nullable()->comment('所有父类ID');
             $table->string('name')->unique()->comment('类目名称，如手机');
             $table->tinyInteger('level')->unsigned()->default(1)->comment('类目层级');
             $table->json('spu_conf')->nullable()->comment('可用SPU配置信息');

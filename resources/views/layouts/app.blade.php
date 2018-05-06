@@ -33,13 +33,19 @@
                     </a>
                 </div>
 
+
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+                    {{--<!-- Right Side Of Navbar -->--}}
+                    {{--加入我的中心链接--}}
+                   {{--<ul>--}}
+                      {{--11--}}
+                   {{--</ul>--}}
+
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
@@ -71,10 +77,27 @@
             </div>
         </nav>
 
-        @yield('content')
+
     </div>
+    <div class="container">
+        <div class="row">
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation"><a href="#">Profile</a></li>
+                <li role="presentation"><a href="#">Messages</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+
+
+
+    @yield('content')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    {{--<script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>--}}
+    @yield('script')
 </body>
 </html>

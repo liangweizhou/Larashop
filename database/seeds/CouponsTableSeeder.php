@@ -11,7 +11,7 @@ class CouponsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table()->insert([
+        DB::table('coupons')->insert([
             [
                 'name' => '小米手机五一劳动节优惠券全场手机通用',
                 'type' => 'cash',

@@ -18,13 +18,15 @@ class AddressController extends Controller
     /*
      显示当前的登录用户的地址列表
      * */
-    public function index(){
-        $addresses = $this->model
+    public function index()
+    {
+       $addresses = $this->model
             ->where('user_id', Auth::id())
-            ->orderBy('is_default', 'desc')
+             ->orderBy('is_default', 'desc')
             ->get();
-        //dd($addresses);
-        return response()->json($addresses);
+        // dd($addresses);
+         return response()->json($addresses);
+        //return view('address.index');
     }
 
     /**

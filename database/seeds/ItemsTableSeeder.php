@@ -15,7 +15,7 @@ class ItemsTableSeeder extends Seeder
            [
             'id' => 1,
             'name' => '小米4 全网通 高配版 3GB+32GB 白色 移动联通电信4G手机 双卡双待',
-            'products_id' => 1,
+            'product_id' => 1,
             'category_id' => 1,
             'category_ids' => '[1,0]',
             'spu' => '{"brand": "小米", "os": "Android"}',
@@ -29,7 +29,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'id' => 2,
                 'name' => '小米3 电信4G 高配版 6GB+64GB 黑色 电信4G手机',
-                'products_id' => 6,
+                'product_id' => 6,
                 'category_id' => 1,
                 'category_ids' => '[1,0]',
                 'spu' => '{"brand": "小米", "os": "Android"}',
@@ -43,7 +43,7 @@ class ItemsTableSeeder extends Seeder
             [
                 'id' => 3,
                 'name' => '联想ThinkPadE540 15.6英寸轻薄窄边框笔记本电脑（i5-8250U 8G 128GSSD+500G 2G独显 FHD）冰原银',
-                'products_id' => 2,
+                'product_id' => 2,
                 'category_id' => 2,
                 'category_ids' => '[2,0]',
                 'spu' => '{"brand": "ThinkPad", "os": "Windows"}',

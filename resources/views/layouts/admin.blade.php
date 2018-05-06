@@ -12,13 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
                         <span class="sr-only">Toggle Navigation</span>
@@ -70,7 +70,28 @@
             </div>
         </nav>
 
-        @yield('content')
+        <div class="row">
+            <div class="col-md-2 col-xs-2 col-sm-2">
+                <div class="navbar-collapse">
+                    <div class="navbar">
+                        <h3>导航栏</h3>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li role="presentation"><a href="{{route('admin.index')}}">管理员管理</a></li>
+                            <li role="presentation"><a href="{{route('admin.product.index')}}">商品管理</a></li>
+                            <li role="presentation"><a href="{{route('admin.category.index')}}">类型管理</a></li>
+                            <li role="presentation"><a href="{{route('admin.item.index')}}">单品管理</a></li>
+                            <li role="presentation"><a href="{{route('admin.item.index')}}">优惠券管理</a></li>
+                            <li role="presentation"><a href="#">用户管理</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+                @yield('content')
+
+        </div>
+
+
     </div>
 
     <!-- Scripts -->

@@ -136,7 +136,6 @@ class LoginController extends Controller
     {
        $data = $request->only(['email', 'password']);
        $data['password'] = Hash::make($data['password']);
-       print_r($data);exit;
        $admin = $this->model
                      ->where([
                          ['email', $data['email']],
