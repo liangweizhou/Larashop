@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Cart;
-use App\User;
 use Illuminate\Http\Request;
+use App\Cart;
+use App\Http\Requests\StoreCart;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 
 class CartController extends Controller
 {
@@ -17,54 +18,62 @@ class CartController extends Controller
     }
 
     /**
-     *  显示购物车列表
+     * 显示登录用户的购物车详情
      *
      * @return $this
      */
     public function index()
     {
-        $carts = $this->model
-            ->join('users', 'carts.user_id', '=', 'users.id')
-            ->join('items', 'carts.items_id', '=', 'items.id')
-            ->select('items.name', 'items.spu', 'items.sku', 'items.price', 'items.cover_image', 'amount')
-            ->where('user_id', Auth::id())
+        $items = $this->model
+            ->join('items', 'carts.item_id', '=', 'items.id')
+            ->select('carts.id', 'carts.item_id', 'items.name', 'items.price', 'carts.amount', 'items.cover_img')
+            ->where([
+                ['user_id', Auth::id()]
+            ])
             ->get();
 
-        // 直接获取登录用户对应的id对比后可以返回查询值 index($id)
-        //        $carts = $this->model
-//            ->join('items', 'carts.items_id', '=', 'items.id')
-//            ->select('items.name', 'items.spu', 'items.sku', 'items.price', 'items.cover_image', 'amount')
-//            ->where('id', Auth::id())
-//            ->get();
+        // 变成以id => item形式存储
+        $arr = [];
+        foreach ($items as $item)
+        {
+            $arr[$item['id']] = $item;
+        }
 
-        return view('center.cart.index')->with(['carts' => $carts]);
+        return view('center.cart.index')->with(['items' => $arr]);
     }
 
-    // 添加购物车, 获取对应的item_id存入购物车表, 从商品详情页中会获取单品的信息
-    public function store(Request $request)
+    /**
+     *  加入购物车
+     *
+     * @param StoreCart $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function store(StoreCart $request)
     {
-        $data = $request->only(['user_id', 'item_id', 'amount']);
-        $this->model->create($data);
-        return redirect(route('cart.index'));;
-    }
+        $data = $request->only(['item_id', 'amount']);
+        $data['item_id'] = intval($data['item_id']);
+        $data['user_id'] = Auth::id();
+        $data['amount'] = intval($data['amount']) > 0? intval($data['amount']) : 1;
 
-    // 修改购物车的信息 ，这里只能更改数量
-    public function update(Request $request, $id)
-    {
-        $data = $request->only(['count']);
-        $this->model
-            ->where([
-                ['id', $id]
-            ])
-            ->update($data);
-        return redirect(route('cart.index', ['id' => $id]));
-    }
+        // 尝试创建一条新的购物车记录，如果唯一键（user_id-item_id）重复，则更新该item的amount
+        try {
+            $this->model->create($data);
+        } catch (QueryException $e) {
+            // 唯一键重复
+            if ($e->getCode() == 23000) {
+                $this->model
+                    ->where([
+                        ['user_id', $data['user_id']],
+                        ['item_id', $data['item_id']]
+                    ])
+                    ->increment('amount', $data['amount']);
+            }
+        }
 
-    // 删除购物车
-    public function destroy($id)
-    {
-        $this->model
-            ->destroy($id);
         return redirect(route('cart.index'));
     }
+
+//    public function destroy(){
+//
+//    }
 }

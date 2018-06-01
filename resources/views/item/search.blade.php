@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -92,7 +92,7 @@
                                 <tr>
                                     <th scope="col">{{ $i }}</th>
                                     <th scope="col"><img src="{{ $items['data'][$i]['cover_img'] }}" width="50" height="50"></th>
-                                    <th scope="col">{{ $items['data'][$i]['name'] }}</th>
+                                    <th scope="col"><a href="{{route('product.show', ['id' => $items['data'][$i]['product_id']])}}">{{ $items['data'][$i]['name'] }}</a></th>
                                     <th scope="col">{{ $items['data'][$i]['price'] }}</th>
                                     <th scope="col">{{ $items['data'][$i]['total_amount'] }}</th>
                                     <th scope="col">{{ $items['data'][$i]['remaining_amount'] }}</th>

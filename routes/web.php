@@ -25,25 +25,13 @@ Route::get('/test', function () {
     return view('index');
 });
 
-
-// 前端登录及未登录用户可访问路由组
-// 单品搜索
-Route::get('category/{catid}/search', 'ItemController@index')->name('item.index');
-Route::post('category/{catid}/search', 'ItemController@search')->name('item.search');
-// 商品详情，即商品所包含的所有单品的详情
-Route::get('product/{id}', 'ProductController@show')->name('product.show');
-Route::get('product/{id}/item/{itemid}', 'ProductController@show')->name('product.show.item');
-
-
-
-
 //新建后台管理的各种路由
 //后台登录模块路由
 Route::get('admin/login','Admin\LoginController@showLoginForm')->name('admin.login.form');
 Route::post('admin/login','Admin\LoginController@login')->name('admin.login');
 
 //先把middleware去掉，做其他的工作->middleware(['admin.auth'])
-Route::namespace('Admin')->prefix('admin')->group(function (){
+Route::namespace('Admin')->middleware(['admin.auth'])->prefix('admin')->group(function (){
     // 退出登录
     Route::post('/logout','LoginController@logout')->name('admin.logout');
     // 显示管理员列表
@@ -139,6 +127,16 @@ Route::namespace('Admin')->prefix('admin')->group(function (){
 
 //  前台功能的实现
 
+
+
+// 前端登录及未登录用户可访问路由组
+// 单品搜索
+Route::get('category/{catid}/search', 'ItemController@index')->name('item.index');
+Route::post('category/{catid}/search', 'ItemController@search')->name('item.search');
+// 商品详情，即商品所包含的所有单品的详情
+Route::get('product/{id}', 'ProductController@show')->name('product.show');
+Route::get('product/{id}/item/{itemid}', 'ProductController@show')->name('product.show.item');
+
 // 定义路由组 ，该路由组只有登录的用户可以访问
 Route::middleware(['auth'])->group(function (){
     //  用户收货地址添加
@@ -156,7 +154,6 @@ Route::middleware(['auth'])->group(function (){
     Route::put('/address/{id}', 'AddressController@update')->name('address.update');
     // 删除地址
     Route::delete('/address/{id}', 'AddressController@destroy')->name('address.destroy');
-
 
     //用户发票的操作
     // 显示发票信息列表
@@ -184,15 +181,24 @@ Route::middleware(['auth'])->group(function (){
 
     // 用户购物车
     //显示购物车全部信息
-    Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::get('cart', 'CartController@index')->name('cart.index');
 //    //显示购物车详情
 //    Route::get('/invoice/{id}','InvoiceController@show')->name('invoice.show');
     // 加入购物车
-    Route::post('/cart', 'CartController@store')->name('cart.store');
-    // 修改发票
-    Route::put('/cart/{id}', 'CartController@update')->name('cart.update');
+    Route::post('cart/store', 'CartController@store')->name('cart.store');
+//    // 修改发票
+//    Route::put('/cart/{id}', 'CartController@update')->name('cart.update');
     // 移出购物车
     Route::delete('/cart/{id}', 'CartController@destroy')->name('cart.destroy');
+
+
+// 显示填写并核对订单信息页面
+    Route::post('order/create', 'OrderController@create')->name('order.create');
+    // 提交订单并余额支付
+    Route::post('order/store', 'OrderController@store')->name('order.store');
+    // 显示订单列表
+    Route::get('order', 'OrderController@index')->name('order.index');
+
 
     // 用户订单, 目前只使用查看订单的路由，订单不能修改，或者可以修改订单状态不显示订单
     Route::get('/order','OrderController@index')->name('order.index');
@@ -214,11 +220,6 @@ Route::middleware(['auth'])->group(function (){
 
    // 进入个人优惠券列表
     Route::get('coupon','CouponController@index')->name('conpon.index');
-
-
-
-
-
 }
 );
 

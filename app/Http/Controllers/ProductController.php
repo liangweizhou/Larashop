@@ -21,6 +21,13 @@ class ProductController extends Controller
         $this->model = $model;
     }
 
+    /**
+     * 前台展示商品
+     *
+     * @param $id
+     * @param null $itemid
+     * @return $this
+     */
     public function show($id, $itemid = null)
     {
         $productid = intval($id);

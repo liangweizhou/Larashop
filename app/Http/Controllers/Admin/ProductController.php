@@ -126,14 +126,14 @@ class ProductController extends Controller
     public function update(UpdateProduct $request, $id)
     {
         $id = intval($id);
-        $data = $request->only(['name', 'spu', 'description']);
-        $data['spu'] = json_encode(json_decode($data['spu'], true));
+        $data = $request->only(['name','category_id',  'spu', 'description']);
+//        $data['spu'] = json_encode(json_decode($data['spu'], true));
 
         $this->model
             ->find($id)
             ->update($data);
 
-        return redirect(route('admin.product.show', ['id' => $id]));
+        return redirect(route('admin.product.index'));
     }
 
     /**

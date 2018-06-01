@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/common.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -48,6 +49,19 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{route('userinfo.edit')}}">个人信息修改</a></li>
+                                <li><a href="{{route('cart.index')}}">我的购物车</a></li>
+                                <li><a href="{{route('order.index')}}">我的订单</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{{route('invoice.index')}}">我的发票</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">我的优惠券</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">我的购物车</a></li>
                         @guest
                             <li><a href="{{ route('login') }}">登录</a></li>
                             <li><a href="{{ route('register') }}">注册</a></li>
@@ -79,19 +93,6 @@
 
 
     </div>
-    <div class="container">
-        <div class="row">
-            <ul class="nav nav-pills">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
-                <li role="presentation"><a href="#">Profile</a></li>
-                <li role="presentation"><a href="#">Messages</a></li>
-            </ul>
-
-        </div>
-    </div>
-
-
-
 
     @yield('content')
 

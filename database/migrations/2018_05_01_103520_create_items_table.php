@@ -12,7 +12,7 @@ use Illuminate\Database\Migrations\Migration;
 | 搜索中搜索的信息是单品信息
 | spu继承products表的spu，不可修改
 | sku为品类sku_conf的实例，例如
-| {'ram_size': 1, 'disk_size': 128, 'cpu_cores': '双核', 'screen_size': 5.5, 'battery_capacity': 3600,
+| {'ram_size': 1, 'disk_size': 128, 'cpu_cores': '双核', 'scr een_size': 5.5, 'battery_capacity': 3600,
 |  'network_mode': ['移动4G', '电信4G', '联通4G']}
 |
 */

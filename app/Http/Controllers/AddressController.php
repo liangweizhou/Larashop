@@ -21,12 +21,16 @@ class AddressController extends Controller
     public function index()
     {
        $addresses = $this->model
-            ->where('user_id', Auth::id())
+            ->select('id', 'user_id', 'tag', 'consignee_name', 'consignee_mobile', 'province', 'city', 'district', 'detail')
+            ->where([
+                ['user_id', Auth::id()]
+            ])
              ->orderBy('is_default', 'desc')
             ->get();
-        // dd($addresses);
-         return response()->json($addresses);
-        //return view('address.index');
+         //print_r($addresses);
+         //echo '123';
+        // return response()->json($addresses);
+        return view('address.index')->with(['addresses' => $addresses]);
     }
 
     /**
@@ -43,7 +47,8 @@ class AddressController extends Controller
                 ['user_id',  Auth::id()]
             ])
             ->first();
-        return response()->json($address);
+        //return response()->json($address);
+        return view('address.detail')->with(['address' => $address]);
     }
 
     /**
@@ -103,6 +108,7 @@ class AddressController extends Controller
                 ['user_id', Auth::id()]
             ])
             ->update($data);
+        return redirect(route('address.index'));
     }
 
     /**

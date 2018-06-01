@@ -135,7 +135,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
        $data = $request->only(['email', 'password']);
-       $data['password'] = Hash::make($data['password']);
+      // $data['password'] = Hash::make($data['password']);
+
        $admin = $this->model
                      ->where([
                          ['email', $data['email']],
@@ -149,7 +150,7 @@ class LoginController extends Controller
                'email' => $admin['email'],
                'name' => $admin['name'],
                'status' => 1]);
-           return redirect(route('admin.admin'));
+           return redirect(route('admin.index'));
        }
        return redirect(route('admin.login.form'));
     }

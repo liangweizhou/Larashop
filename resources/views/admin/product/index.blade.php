@@ -15,6 +15,7 @@
                                 <th scope="col">名称</th>
                                 <th scope="col">创建时间</th>
                                 <th scope="col">修改时间</th>
+                                <th scope="col">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -24,6 +25,10 @@
                                     <th scope="col">{{ $products[$i]['name'] }}</th>
                                     <th scope="col">{{ $products[$i]['created_at'] }}</th>
                                     <th scope="col">{{ $products[$i]['updated_at'] }}</th>
+                                    <th scope="col">
+                                        <a href="{{route('admin.product.edit', ['id' => $products[$i]['id']])}}">查看</a>
+                                        <a href="{{route('admin.product.destroy', ['id' => $products[$i]['id']])}}">删除</a>
+                                    </th>
                                 </tr>
                             @endfor
                             </tbody>

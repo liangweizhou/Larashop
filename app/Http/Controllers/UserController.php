@@ -27,7 +27,6 @@ class UserController extends Controller
         $info = $this->model
                      ->select('id', 'name', 'sex', 'birth_date', 'email', 'mobile', 'avatar', 'balance', 'points', 'level')
                      ->where([
-                         //['id', $id],
                          ['id',Auth::id()]
                      ])
                      ->first();

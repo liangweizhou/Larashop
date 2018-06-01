@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
     <div class="container">
@@ -69,7 +69,14 @@
                                     <input id="product.description" type="text" class="form-control" value="{{ $product['description'] }}" readonly>
                                 </div>
                             </div>
+
+
+
+                            {{--<button type="submit" >加入购物车</button>--}}
+
                         </form>
+
+
                         <script>
                             var sortedSkuKeys = {!! json_encode($sortedKeys) !!};
                             var skus = {!! json_encode($skus) !!};

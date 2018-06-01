@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -52,6 +52,7 @@ class RegisterController extends Controller
             'sex' => 'required|string|in:M,F,U',
             'birth_date' => 'date',
             'mobile' => 'required|string|size:11',
+            'avatar' => 'string',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -70,6 +71,7 @@ class RegisterController extends Controller
             'sex' => $data['sex'],
             'birth_date' => $data['birth_date'],
             'mobile' => $data['mobile'],
+            'avatar' => $data['avatar'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

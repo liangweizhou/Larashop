@@ -21,8 +21,7 @@ class CartsTableSeeder extends Seeder
                'user_id' => 2,
                'item_id' => 3,
                'amount' => 1
-           ],
-
+           ]
        ]);
     }
 }

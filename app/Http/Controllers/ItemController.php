@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Category;
@@ -38,12 +39,12 @@ class ItemController extends Controller
 
         // 获取$catid分类下的单品
         $items = $this->model
-            ->select('id', 'name', 'cover_img', 'price', 'total_amount', 'remaining_amount')
+            ->select('id', 'product_id',  'name', 'cover_img', 'price', 'total_amount', 'remaining_amount')
             ->whereRaw('JSON_CONTAINS(category_ids,  \'[' . $catid. ']\')')
             ->paginate(15)
             ->toArray();
 
-        return view('item.search')->with(['category' => $category, 'items' => $items]);
+       return view('item.search')->with(['category' => $category, 'items' => $items]);
     }
 
     /**
@@ -68,7 +69,7 @@ class ItemController extends Controller
         ];
 
         $query = $this->model
-            ->select('id', 'name', 'cover_img', 'price', 'total_amount', 'remaining_amount');
+            ->select('id', 'product_id', 'name', 'cover_img', 'price', 'total_amount', 'remaining_amount');
         // 保存搜索条件
         $search = [];
 

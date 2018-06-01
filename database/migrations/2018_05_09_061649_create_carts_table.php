@@ -24,15 +24,18 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->unique()->comment('用户ID');
-            $table->integer('item_id')->unsigned()->unique()->comment('单品ID');
+//            $table->integer('user_id')->unsigned()->unique()->comment('用户ID');
+//            $table->integer('item_id')->unsigned()->unique()->comment('单品ID');
+            $table->integer('user_id')->unsigned()->comment('用户ID');
+            $table->integer('item_id')->unsigned()->comment('单品ID');
             $table->integer('amount')->unsigned()->commnet('数量');
             $table->timestamps();
 
             $table->index('user_id');
             $table->index(['user_id', 'item_id']);
-          //  $table->foreign('user_id')->references('id')->on('users');
-          //  $table->foreign('item_id')->references('id')->on('items');
+            $table->unique(['user_id', 'item_id']);
+            //  $table->foreign('user_id')->references('id')->on('users');
+            //  $table->foreign('item_id')->references('id')->on('items');
         });
     }
 
