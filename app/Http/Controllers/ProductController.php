@@ -35,13 +35,13 @@ class ProductController extends Controller
         $product = $this->model
             ->select('id', 'name', 'category_id', 'category_ids', 'spu', 'description')
             ->find($productid);
-
+       // dd($product);
         // 品类信息
         $category = $product->category()
             ->select('id', 'name', 'level', 'sku_conf')
             ->first();
         $skuConf = json_decode($category['sku_conf'], true);
-
+       // dd($skuConf);
         $items = $product->items()
             ->select('id', 'name', 'spu', 'sku', 'price', 'total_amount', 'remaining_amount', 'cover_img', 'imgs')
             ->get();
@@ -53,10 +53,11 @@ class ProductController extends Controller
         $skus = [];
         $currentItem = [];
         // key排序
-        $sortedKeys = [];
+       // $sortedKeys = [];
 
         // 前端sku条件筛选选项，对于skuConf中的每一项遍历其所有单品，集合单品所有出现过的值，并且对于数组类型的值进行合并，有单位的值带上单位
         $skuFormConf = [];
+        //获取$skuConf中的属性key
         foreach (array_keys($skuConf) as $key)
         {
             $skuFormConf[$key] = [];
